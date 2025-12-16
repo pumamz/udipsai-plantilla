@@ -29,7 +29,7 @@ const tableData: Order[] = [
     id: 1,
     user: {
       image: "/images/user/user-17.jpg",
-      name: "Lindsey Curtis",
+      name: "Daniel Puma",
       role: "Web Designer",
     },
     projectName: "Agency Website",
@@ -47,7 +47,7 @@ const tableData: Order[] = [
     id: 2,
     user: {
       image: "/images/user/user-18.jpg",
-      name: "Kaiya George",
+      name: "Alexis Ramirez",
       role: "Project Manager",
     },
     projectName: "Technology",
@@ -61,7 +61,7 @@ const tableData: Order[] = [
     id: 3,
     user: {
       image: "/images/user/user-17.jpg",
-      name: "Zain Geidt",
+      name: "Ismael Cedillo",
       role: "Content Writing",
     },
     projectName: "Blog Writing",
@@ -75,7 +75,7 @@ const tableData: Order[] = [
     id: 4,
     user: {
       image: "/images/user/user-20.jpg",
-      name: "Abram Schleifer",
+      name: "Sebastian Jara",
       role: "Digital Marketer",
     },
     projectName: "Social Media",
@@ -93,7 +93,7 @@ const tableData: Order[] = [
     id: 5,
     user: {
       image: "/images/user/user-21.jpg",
-      name: "Carla George",
+      name: "Jhostin Pacheco",
       role: "Front-end Developer",
     },
     projectName: "Website",
