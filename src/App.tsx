@@ -25,7 +25,7 @@ export default function App() {
             {/* Forms */}
             {/* <Route path="/form-elements" element={<FormElements />} /> */}
 
-              {/* Pacientes */}
+            {/* Pacientes */}
             <Route path="/formulario-pacientes" element={<FormularioPacientes />} />
 
             {/* Especialistas */}

@@ -3,17 +3,17 @@ import { Link, useLocation } from "react-router";
 
 // Assume these icons are imported from an icon library
 import {
-  BoxCubeIcon,
   CalenderIcon,
   ChevronDownIcon,
   GridIcon,
   HorizontaLDots,
   ListIcon,
-  PageIcon,
   PieChartIcon,
   PlugInIcon,
   TableIcon,
   UserCircleIcon,
+  InstituionIcon,
+  DocsIcon,
 } from "../icons";
 import { useSidebar } from "../context/SidebarContext";
 
@@ -27,58 +27,64 @@ type NavItem = {
 const navItems: NavItem[] = [
   {
     icon: <GridIcon />,
-    name: "Dashboard",
-    subItems: [{ name: "Ecommerce", path: "/", pro: false }],
-  },
-  {
-    icon: <CalenderIcon />,
-    name: "Calendar",
-    path: "/calendar",
+    name: "Home",
+    path: "/",
   },
   {
     icon: <UserCircleIcon />,
-    name: "User Profile",
-    path: "/profile",
-  },
-  {
-    name: "Forms",
-    icon: <ListIcon />,
-    subItems: [{ name: "Form Elements", path: "/form-elements", pro: false }],
-  },
-  {
-    name: "Tables",
-    icon: <TableIcon />,
-    subItems: [{ name: "Basic Tables", path: "/basic-tables", pro: false }],
-  },
-  {
-    name: "Pages",
-    icon: <PageIcon />,
+    name: "Pacientes",
+    path: "/pacientes",
     subItems: [
-      { name: "Blank Page", path: "/blank", pro: false },
-      { name: "404 Error", path: "/error-404", pro: false },
+      { name: "Lista de pacientes", path: "/lista-pacientes", pro: false },
+      { name: "Nuevo paciente", path: "/formulario-paciente", pro: false },
+      { name: "Seguimientos", path: "/seguimiento-pacientes", pro: false },
     ],
+  },
+  { icon: <CalenderIcon />, name: "Citas", path: "/citas" },
+  {
+    icon: <DocsIcon />,
+    name: "Fichas",
+    path: "/fichas",
+    subItems: [
+      { name: "Historia Clínica", path: "/historia-clinica", pro: false },
+      {
+        name: "Psicología Educativa",
+        path: "/psicologia-educativa",
+        pro: false,
+      },
+      { name: "Psicología Clínica", path: "/psicologia-clinica", pro: false },
+      { name: "Fonoaudiología", path: "/fonoaudiologia", pro: false },
+    ],
+  },
+  {
+    icon: <InstituionIcon />,
+    name: "Instituciones",
+    path: "/instituciones",
+  },
+  {
+    name: "Especialistas",
+    icon: <ListIcon />,
+    subItems: [
+      { name: "Lista de especialistas", path: "/especialistas-lista", pro: false },
+      { name: "Nuevo especialista", path: "/especialistas-nuevo", pro: false },
+      { name: "Asignaciones", path: "/especialistas-asignaciones", pro: false },
+    ],
+  },
+  {
+    name: "Sedes",
+    icon: <TableIcon />,
+    path: "/sedes",
   },
 ];
 
 const othersItems: NavItem[] = [
   {
     icon: <PieChartIcon />,
-    name: "Charts",
+    name: "Reportes",
     subItems: [
-      { name: "Line Chart", path: "/line-chart", pro: false },
-      { name: "Bar Chart", path: "/bar-chart", pro: false },
-    ],
-  },
-  {
-    icon: <BoxCubeIcon />,
-    name: "UI Elements",
-    subItems: [
-      { name: "Alerts", path: "/alerts", pro: false },
-      { name: "Avatar", path: "/avatars", pro: false },
-      { name: "Badge", path: "/badge", pro: false },
-      { name: "Buttons", path: "/buttons", pro: false },
-      { name: "Images", path: "/images", pro: false },
-      { name: "Videos", path: "/videos", pro: false },
+      { name: "Fichas", path: "/reportes-fichas", pro: false },
+      { name: "Cambios", path: "/reportes-cambios", pro: false },
+      {name: "Citas", path: "/reportes-citas", pro: false }
     ],
   },
   {
@@ -302,19 +308,19 @@ const AppSidebar: React.FC = () => {
           !isExpanded && !isHovered ? "lg:justify-center" : "justify-start"
         }`}
       >
-        <Link to="/">
+        <Link to="/" className="flex justify-center items-center w-full">
           {isExpanded || isHovered || isMobileOpen ? (
             <>
               <img
                 className="dark:hidden"
-                src="/images/logo/logo.svg"
+                src="/images/logo/logo.png"
                 alt="Logo"
                 width={150}
                 height={40}
               />
               <img
                 className="hidden dark:block"
-                src="/images/logo/logo-dark.svg"
+                src="/images/logo/logo-dark.png"
                 alt="Logo"
                 width={150}
                 height={40}
@@ -322,7 +328,7 @@ const AppSidebar: React.FC = () => {
             </>
           ) : (
             <img
-              src="/images/logo/logo-icon.svg"
+              src="/images/logo/logo-icon.png"
               alt="Logo"
               width={32}
               height={32}
