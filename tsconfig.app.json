@@ -22,5 +22,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "src/api/axiosClient.js"]
+  "include": ["src", "src/api/axiosClient.ts"]
 }
