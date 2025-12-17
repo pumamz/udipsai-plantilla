@@ -6,7 +6,8 @@ import AppLayout from "./layout/AppLayout";
 import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
 import FormularioEspecialistas from "./pages/Especialistas/FormularioEspecialistas";
-
+import ListaPacientes from "./pages/Pacientes/ListaPacientes";
+import ListaInstituciones from "./pages/Instituciones/Instituciones";
 export default function App() {
   return (
     <>
@@ -26,13 +27,13 @@ export default function App() {
             {/* <Route path="/form-elements" element={<FormElements />} /> */}
 
             {/* Pacientes */}
-            <Route path="/formulario-pacientes" element={<FormularioPacientes />} />
-
+            <Route path="/pacientes" element={<ListaPacientes />} />
+            <Route path="/pacientes/nuevo" element={<FormularioPacientes />} />
             {/* Especialistas */}
-            <Route path="/formulario-especialistas" element={<FormularioEspecialistas />} />
+            <Route path="/especialistas/nuevo" element={<FormularioEspecialistas />} />
             {/* Tables */}
             {/* <Route path="/basic-tables" element={<BasicTables />} /> */}
-
+            <Route path="/instituciones" element={<ListaInstituciones />} />
             {/* Ui Elements */}
             {/* <Route path="/alerts" element={<Alerts />} />
             <Route path="/avatars" element={<Avatars />} />

@@ -1,7 +1,7 @@
 import api from './api';
 
 export const asignacionesService = {
-  buscar: async (formData) => {
+  buscar: async (formData: any) => {
     try {
       const response = await api.post('api/asignaciones/buscar', formData);
       return response.data;
@@ -11,7 +11,7 @@ export const asignacionesService = {
     }
   },
 
-  obtenerPorPasante: async (cedula) => {
+  obtenerPorPasante: async (cedula: string) => {
     try {
       const response = await api.get(`api/asignaciones/pasante/${cedula}`);
       return response.data;
@@ -21,7 +21,7 @@ export const asignacionesService = {
     }
   },
 
-  asignar: async (pacienteId, pasanteId) => {
+  asignar: async (pacienteId: number | string, pasanteId: number | string) => {
     try {
       const response = await api.post('api/asignaciones/asignar', {
         pacienteId,
@@ -34,7 +34,7 @@ export const asignacionesService = {
     }
   },
 
-  eliminar: async (asignacionId) => {
+  eliminar: async (asignacionId: number | string) => {
     try {
       const response = await api.delete(`api/asignaciones/eliminar/${asignacionId}`);
       return response.data;

@@ -11,7 +11,7 @@ export const institucionesService = {
     }
   },
 
-  crear: async (request) => {
+  crear: async (request: any) => {
     try {
       const response = await api.post('api/instituciones/insertar', request);
       return response.data;
@@ -21,7 +21,7 @@ export const institucionesService = {
     }
   },
 
-  actualizar: async (id, request) => {
+  actualizar: async (id: number | string, request: any) => {
     try {
       const response = await api.put(`api/instituciones/actualizar/${id}`, request);
       return response.data;
@@ -31,7 +31,7 @@ export const institucionesService = {
     }
   },
 
-  eliminar: async (id) => {
+  eliminar: async (id: number | string) => {
     try {
       const response = await api.delete(`api/instituciones/eliminar/${id}`);
       return response.data;

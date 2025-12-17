@@ -35,8 +35,8 @@ const navItems: NavItem[] = [
     name: "Pacientes",
     path: "/pacientes",
     subItems: [
-      { name: "Lista de pacientes", path: "/lista-pacientes", pro: false },
-      { name: "Nuevo paciente", path: "/formulario-paciente", pro: false },
+      { name: "Lista de pacientes", path: "/pacientes", pro: false },
+      { name: "Nuevo paciente", path: "/pacientes/nuevo", pro: false },
       { name: "Seguimientos", path: "/seguimiento-pacientes", pro: false },
     ],
   },
@@ -65,9 +65,9 @@ const navItems: NavItem[] = [
     name: "Especialistas",
     icon: <ListIcon />,
     subItems: [
-      { name: "Lista de especialistas", path: "/especialistas-lista", pro: false },
-      { name: "Nuevo especialista", path: "/especialistas-nuevo", pro: false },
-      { name: "Asignaciones", path: "/especialistas-asignaciones", pro: false },
+      { name: "Lista de especialistas", path: "/especialistas", pro: false },
+      { name: "Nuevo especialista", path: "/especialistas/nuevo", pro: false },
+      { name: "Asignaciones", path: "/especialistas/asignaciones", pro: false },
     ],
   },
   {

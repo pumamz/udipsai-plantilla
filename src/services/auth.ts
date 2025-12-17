@@ -1,7 +1,7 @@
 import api from './api';
 
 export const authService = {
-  login: async (values) => {
+  login: async (values: any) => {
     try {
       const response = await api.post('api/especialistas/login', values);
       const usuario = { ...response.data };

@@ -1,7 +1,7 @@
 import api from './api';
 
 export const seguimientosService = {
-  listarPorPaciente: async (id) => {
+  listarPorPaciente: async (id: number | string) => {
     try {
       const response = await api.get(`api/seguimientos/paciente/${id}`);
       return response.data;
@@ -11,7 +11,7 @@ export const seguimientosService = {
     }
   },
 
-  crear: async (request) => {
+  crear: async (request: any) => {
     try {
       const response = await api.post('api/seguimientos', request);
       return response.data;
@@ -21,7 +21,7 @@ export const seguimientosService = {
     }
   },
 
-  actualizar: async (id, request) => {
+  actualizar: async (id: number | string, request: any) => {
     try {
       const response = await api.put(`api/seguimientos/${id}`, request);
       return response.data;
@@ -31,7 +31,7 @@ export const seguimientosService = {
     }
   },
 
-  eliminar: async (id) => {
+  eliminar: async (id: number | string) => {
     try {
       const response = await api.delete(`api/seguimientos/${id}`);
       return response.data;
@@ -41,6 +41,27 @@ export const seguimientosService = {
     }
   },
 
-  subirArchivo: async (id, formData) => {
+  subirArchivo: async (id: number | string, formData: FormData) => {
     try {
-      const response = await api.post(`api/seguimientos/${id}/documento`, formData, {\n        headers: {\n          'Content-Type': 'multipart/form-data',\n        },\n      });\n      return response.data;\n    } catch (error) {\n      console.error('Error al subir archivo:', error);\n      throw error;\n    }\n  },\n\n  eliminarArchivo: async (id) => {\n    try {\n      const response = await api.delete(`api/seguimientos/documento/${id}`);\n      return response.data;\n    } catch (error) {\n      console.error('Error al eliminar archivo:', error);\n      throw error;\n    }\n  },\n};
+      const response = await api.post(`api/seguimientos/${id}/documento`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error al subir archivo:', error);
+      throw error;
+    }
+  },
+
+  eliminarArchivo: async (id: number | string) => {
+    try {
+      const response = await api.delete(`api/seguimientos/documento/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error al eliminar archivo:', error);
+      throw error;
+    }
+  },
+};

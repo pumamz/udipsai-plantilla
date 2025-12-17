@@ -1,7 +1,7 @@
 import api from './api';
 
 export const testService = {
-  listarPorPaciente: async (id) => {
+  listarPorPaciente: async (id: number | string) => {
     try {
       const response = await api.get(`api/tests/paciente/${id}`);
       return response.data;
@@ -11,7 +11,7 @@ export const testService = {
     }
   },
 
-  subirTest: async (request) => {
+  subirTest: async (request: any) => {
     try {
       const response = await api.post('api/tests', request, {
         headers: {
@@ -25,7 +25,7 @@ export const testService = {
     }
   },
 
-  eliminar: async (id) => {
+  eliminar: async (id: number | string) => {
     try {
       const response = await api.delete(`api/tests/${id}`);
       return response.data;

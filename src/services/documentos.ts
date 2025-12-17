@@ -1,7 +1,7 @@
 import api from './api';
 
 export const documentosService = {
-  obtenerContenido: async (documentoId) => {
+  obtenerContenido: async (documentoId: number | string) => {
     try {
       const response = await api.get(`api/documentos/${documentoId}/contenido`);
       return response.data;
@@ -11,11 +11,11 @@ export const documentosService = {
     }
   },
 
-  subirDocumento: async (pacienteId, file, nombre) => {
+  subirDocumento: async (pacienteId: number | string, file: File, nombre: string) => {
     try {
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('pacienteId', pacienteId);
+      formData.append('pacienteId', String(pacienteId));
       formData.append('nombre', nombre);
 
       const response = await api.post('api/documentos', formData);
@@ -26,7 +26,7 @@ export const documentosService = {
     }
   },
 
-  eliminar: async (pacienteId, documentoId) => {
+  eliminar: async (pacienteId: number | string, documentoId: number | string) => {
     try {
       const response = await api.delete(`api/pacientes/${pacienteId}/documentos/${documentoId}`);
       return response.data;
@@ -36,7 +36,7 @@ export const documentosService = {
     }
   },
 
-  descargar: async (documentoId) => {
+  descargar: async (documentoId: number | string) => {
     try {
       const response = await api.get(`api/documentos/${documentoId}/descargar`, {
         responseType: 'blob',
@@ -57,7 +57,7 @@ export const documentosService = {
     }
   },
 
-  descargarBase64: async (documentoId) => {
+  descargarBase64: async (documentoId: number | string) => {
     try {
       const response = await api.get(`api/documentos/${documentoId}/contenido`);
       const contenido = response.data;

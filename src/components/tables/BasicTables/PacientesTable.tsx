@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -7,55 +8,46 @@ import {
 } from "../../ui/table";
 
 import Badge from "../../ui/badge/Badge";
+import { pacientesService } from "../../../services/pacientes";
 
 interface Paciente {
   id: number;
-  nombre: string;
+  nombresApellidos: string;
   cedula: string;
   telefono: string;
-  sede: string;
-  estado: boolean;
+  celular: string;
+  sede: {
+    nombre: string;
+  };
+  pacienteEstado: number;
 }
 
-const tableData: Paciente[] = [
-  {
-    id: 1,
-    nombre: "Juan Perez",
-    cedula: "1234567890",
-    telefono: "3012345678",
-    sede: "Sede Principal",
-    estado: true,
-  },
-  {
-    id: 2,
-    nombre: "Maria Gomez",
-    cedula: "0987654321",
-    telefono: "3109876543",
-    sede: "Sede Norte",
-    estado: true,
-  },
-  {
-    id: 3,
-    nombre: "Carlos Sanchez",
-    cedula: "5555555555",
-    telefono: "3115555555",
-    sede: "Sede Sur",
-    estado: false,
-  },
-  {
-    id: 4,
-    nombre: "Ana Martinez",
-    cedula: "4444444444",
-    telefono: "3104444444",
-    sede: "Sede Principal",
-    estado: true,
-  },
-];
-
 export default function PacientesTable() {
-  const getEstadoBadge = (estado: boolean) => {
-    return estado ? 'success' : 'error';
+  const [pacientes, setPacientes] = useState<Paciente[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPacientes = async () => {
+      try {
+        const data = await pacientesService.listar();
+        setPacientes(data);
+      } catch (error) {
+        console.error("Error fetching pacientes:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPacientes();
+  }, []);
+
+  const getEstadoBadge = (estado: number) => {
+    return estado === 1 ? 'success' : 'error';
   };
+
+  if (loading) {
+    return <div>Cargando...</div>;
+  }
 
   return (
     <div>
@@ -104,13 +96,13 @@ export default function PacientesTable() {
           </TableHeader>
           {/* Table Body */}
           <TableBody>
-            {tableData.map((paciente) => (
+            {pacientes.map((paciente) => (
               <TableRow key={paciente.id}>
                 <TableCell className="px-5 py-3 text-theme-xs text-gray-700 dark:text-gray-300">
                   {paciente.id}
                 </TableCell>
                 <TableCell className="px-5 py-3 text-theme-xs text-gray-700 dark:text-gray-300">
-                  {paciente.nombre}
+                  {paciente.nombresApellidos}
                 </TableCell>
                 <TableCell className="px-5 py-3 text-theme-xs text-gray-700 dark:text-gray-300">
                   {paciente.cedula}
@@ -119,14 +111,14 @@ export default function PacientesTable() {
                   {paciente.telefono}
                 </TableCell>
                 <TableCell className="px-5 py-3 text-theme-xs text-gray-700 dark:text-gray-300">
-                  {paciente.sede}
+                  {paciente.sede?.nombre}
                 </TableCell>
                 <TableCell className="px-5 py-3 text-theme-xs text-gray-700 dark:text-gray-300">
                   <Badge
                     size="sm"
-                    color={getEstadoBadge(paciente.estado)}
+                    color={getEstadoBadge(paciente.pacienteEstado)}
                   >
-                    {paciente.estado ? 'Activo' : 'Inactivo'}
+                    {paciente.pacienteEstado === 1 ? 'Activo' : 'Inactivo'}
                   </Badge>
                 </TableCell>
               </TableRow>

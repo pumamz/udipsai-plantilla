@@ -1,7 +1,7 @@
 import api from './api';
 
 export const pacientesService = {
-  crear: async (request) => {
+  crear: async (request: any) => {
     try {
       const response = await api.post('api/pacientes/insertar', request);
       return response.data;
@@ -11,7 +11,7 @@ export const pacientesService = {
     }
   },
 
-  actualizar: async (id, request) => {
+  actualizar: async (id: number | string, request: any) => {
     try {
       const response = await api.put(`api/pacientes/actualizar/${id}`, request);
       return response.data;
@@ -21,7 +21,17 @@ export const pacientesService = {
     }
   },
 
-  obtenerPorId: async (id) => {
+  listar: async () => {
+    try {
+      const response = await api.get('api/pacientes/listar');
+      return response.data;
+    } catch (error) {
+      console.error('Error al listar pacientes:', error);
+      throw error;
+    }
+  },
+
+  obtenerPorId: async (id: number | string) => {
     try {
       const response = await api.get(`api/pacientes/listar/${id}`);
       return response.data;
@@ -31,7 +41,7 @@ export const pacientesService = {
     }
   },
 
-  buscar: async (formData) => {
+  buscar: async (formData: any) => {
     try {
       const response = await api.post('api/pacientes/buscar', formData);
       return response.data;
@@ -41,7 +51,7 @@ export const pacientesService = {
     }
   },
 
-  subirArchivo: async (formData) => {
+  subirArchivo: async (formData: FormData) => {
     try {
       const response = await api.post('api/pacientes/upload', formData, {
         headers: {
@@ -55,7 +65,7 @@ export const pacientesService = {
     }
   },
 
-  subirFichaDiagnostica: async (id, formData) => {
+  subirFichaDiagnostica: async (id: number | string, formData: FormData) => {
     try {
       const response = await api.post(`api/pacientes/${id}/documento`, formData, {
         headers: {
@@ -69,7 +79,7 @@ export const pacientesService = {
     }
   },
 
-  subirFichaCompromiso: async (id, formData) => {
+  subirFichaCompromiso: async (id: number | string, formData: FormData) => {
     try {
       const response = await api.post(`api/pacientes/${id}/fichaCompromiso`, formData, {
         headers: {
@@ -83,7 +93,7 @@ export const pacientesService = {
     }
   },
 
-  subirFichaUnica: async (id, formData) => {
+  subirFichaUnica: async (id: number | string, formData: FormData) => {
     try {
       const response = await api.post(`api/pacientes/${id}/fichaUnica`, formData, {
         headers: {
@@ -97,7 +107,7 @@ export const pacientesService = {
     }
   },
 
-  obtenerReporteGeneral: async (id) => {
+  obtenerReporteGeneral: async (id: number | string) => {
     try {
       const response = await api.get(`api/pacientes/${id}/reporte-general`, {
         responseType: 'blob',
@@ -109,7 +119,7 @@ export const pacientesService = {
     }
   },
 
-  eliminarDocumento: async (id) => {
+  eliminarDocumento: async (id: number | string) => {
     try {
       const response = await api.delete(`api/documentos/${id}`);
       return response.data;

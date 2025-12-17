@@ -31,7 +31,7 @@ export const especialistasService = {
     }
   },
 
-  obtenerPorId: async (id) => {
+  obtenerPorId: async (id: number | string) => {
     try {
       const response = await api.get(`api/especialistas/${id}`);
       const data = response.data;
@@ -49,7 +49,7 @@ export const especialistasService = {
     }
   },
 
-  crear: async (request) => {
+  crear: async (request: any) => {
     try {
       const response = await api.post('api/especialistas/insertar', request);
       return response.data;
@@ -59,7 +59,7 @@ export const especialistasService = {
     }
   },
 
-  actualizar: async (id, request) => {
+  actualizar: async (id: number | string, request: any) => {
     try {
       const response = await api.put(`api/especialistas/actualizar/${id}`, request);
       return response.data;
@@ -69,7 +69,7 @@ export const especialistasService = {
     }
   },
 
-  eliminar: async (id) => {
+  eliminar: async (id: number | string) => {
     try {
       const response = await api.delete(`api/especialistas/${id}`);
       return response.data;

@@ -2,7 +2,7 @@ import api from './api';
 
 export const fichasService = {
   // Historial de cambios
-  obtenerHistorial: async (id) => {
+  obtenerHistorial: async (id: number | string) => {
     try {
       const response = await api.get(`api/historial-cambios/listar/todos/${id}`);
       return response.data;
@@ -13,7 +13,7 @@ export const fichasService = {
   },
 
   // Ficha Médica
-  obtenerFichaMedica: async (id) => {
+  obtenerFichaMedica: async (id: number | string) => {
     try {
       const response = await api.get(`api/fichas-medicas/paciente/${id}`);
       return response.data;
@@ -23,7 +23,7 @@ export const fichasService = {
     }
   },
 
-  actualizarFichaMedica: async (id, request) => {
+  actualizarFichaMedica: async (id: number | string, request: any) => {
     try {
       const response = await api.put(`api/fichas-medicas/${id}`, request);
       return response.data;
@@ -33,7 +33,7 @@ export const fichasService = {
     }
   },
 
-  obtenerReporteFichaMedica: async (id) => {
+  obtenerReporteFichaMedica: async (id: number | string) => {
     try {
       const response = await api.get(`api/fichas-medicas/${id}/reporte`, {
         responseType: 'blob',
@@ -46,7 +46,7 @@ export const fichasService = {
   },
 
   // Psicología Educativa
-  obtenerPsicologiaEducativa: async (id) => {
+  obtenerPsicologiaEducativa: async (id: number | string) => {
     try {
       const response = await api.get(`api/psicologia-educativa/paciente/${id}`);
       return response.data;
@@ -56,7 +56,7 @@ export const fichasService = {
     }
   },
 
-  actualizarPsicologiaEducativa: async (id, request) => {
+  actualizarPsicologiaEducativa: async (id: number | string, request: any) => {
     try {
       const response = await api.put(`api/psicologia-educativa/${id}`, request);
       return response.data;
@@ -66,7 +66,7 @@ export const fichasService = {
     }
   },
 
-  obtenerReportePsicologiaEducativa: async (id) => {
+  obtenerReportePsicologiaEducativa: async (id: number | string) => {
     try {
       const response = await api.get(`api/psicologia-educativa/${id}/reporte`, {
         responseType: 'blob',
@@ -79,7 +79,7 @@ export const fichasService = {
   },
 
   // Psicología Clínica
-  obtenerPsicologiaClinica: async (id) => {
+  obtenerPsicologiaClinica: async (id: number | string) => {
     try {
       const response = await api.get(`api/psicologia-clinica/paciente/${id}`);
       return response.data;
@@ -89,7 +89,7 @@ export const fichasService = {
     }
   },
 
-  actualizarPsicologiaClinica: async (id, request) => {
+  actualizarPsicologiaClinica: async (id: number | string, request: any) => {
     try {
       const response = await api.put(`api/psicologia-clinica/${id}`, request);
       return response.data;
@@ -99,7 +99,7 @@ export const fichasService = {
     }
   },
 
-  obtenerReportePsicologiaClinica: async (id) => {
+  obtenerReportePsicologiaClinica: async (id: number | string) => {
     try {
       const response = await api.get(`api/psicologia-clinica/${id}/reporte`, {
         responseType: 'blob',
@@ -112,7 +112,7 @@ export const fichasService = {
   },
 
   // Fonoaudiología
-  obtenerFonoaudiologia: async (id) => {
+  obtenerFonoaudiologia: async (id: number | string) => {
     try {
       const response = await api.get(`api/fonoaudiologia/paciente/${id}`);
       return response.data;
@@ -122,7 +122,7 @@ export const fichasService = {
     }
   },
 
-  actualizarFonoaudiologia: async (id, request) => {
+  actualizarFonoaudiologia: async (id: number | string, request: any) => {
     try {
       const response = await api.put(`api/fonoaudiologia/${id}`, request);
       return response.data;
@@ -132,7 +132,7 @@ export const fichasService = {
     }
   },
 
-  obtenerReporteFonoaudiologia: async (id) => {
+  obtenerReporteFonoaudiologia: async (id: number | string) => {
     try {
       const response = await api.get(`api/fonoaudiologia/${id}/reporte`, {
         responseType: 'blob',
@@ -145,7 +145,7 @@ export const fichasService = {
   },
 
   // Eliminar fichas
-  eliminarFichaDiagnostica: async (documentoId) => {
+  eliminarFichaDiagnostica: async (documentoId: number | string) => {
     try {
       const response = await api.delete(`api/pacientes/documentos/${documentoId}`);
       return response.data;
@@ -155,7 +155,7 @@ export const fichasService = {
     }
   },
 
-  eliminarFichaCompromiso: async (documentoId) => {
+  eliminarFichaCompromiso: async (documentoId: number | string) => {
     try {
       const response = await api.delete(`api/pacientes/fichaCompromiso/${documentoId}`);
       return response.data;
@@ -165,7 +165,7 @@ export const fichasService = {
     }
   },
 
-  eliminarFichaUnica: async (documentoId) => {
+  eliminarFichaUnica: async (documentoId: number | string) => {
     try {
       const response = await api.delete(`api/pacientes/fichaUnica/${documentoId}`);
       return response.data;

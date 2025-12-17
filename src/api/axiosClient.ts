@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const token = process.env.VITE_API_KEY;
-const baseURL = process.env.VITE_API_URL;
+const token = 'nOsr9FprhOWfLEti5KGJUK6RJWL8R0Ek';
+const baseURL = 'http://localhost:8090/';
 
 const client = axios.create({
   baseURL,
