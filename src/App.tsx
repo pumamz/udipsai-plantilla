@@ -5,6 +5,7 @@ import FormularioPacientes from "./pages/Pacientes/FormularioPacientes";
 import AppLayout from "./layout/AppLayout";
 import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
+import FormularioEspecialistas from "./pages/Especialistas/FormularioEspecialistas";
 
 export default function App() {
   return (
@@ -26,6 +27,9 @@ export default function App() {
 
               {/* Pacientes */}
             <Route path="/formulario-pacientes" element={<FormularioPacientes />} />
+
+            {/* Especialistas */}
+            <Route path="/formulario-especialistas" element={<FormularioEspecialistas />} />
             {/* Tables */}
             {/* <Route path="/basic-tables" element={<BasicTables />} /> */}
 
