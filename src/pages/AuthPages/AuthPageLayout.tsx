@@ -21,13 +21,16 @@ export default function AuthLayout({
                 <img
                   width={231}
                   height={48}
-                  src="/images/logo/auth-logo.svg"
+                  src="/images/logo/auth-logo-white.png"
                   alt="Logo"
                 />
               </Link>
-              <p className="text-center text-gray-400 dark:text-white/60">
-                Free and Open-Source Tailwind CSS Admin Dashboard Template
-              </p>
+                <p className="mb-2 text-4xl font-bold text-center text-white dark:text-white">
+                UDIPSAI
+                </p>
+                <p className="text-center text-white dark:text-white">
+                Unidad de Diagnóstico, Investigación Psicopedagógica y Apoyo a la Inclusión
+                </p>
             </div>
           </div>
         </div>
