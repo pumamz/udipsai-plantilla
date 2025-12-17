@@ -26,10 +26,10 @@ export default function App() {
             {/* <Route path="/form-elements" element={<FormElements />} /> */}
 
             {/* Pacientes */}
-            <Route path="/formulario-pacientes" element={<FormularioPacientes />} />
+            <Route path="/formulario-paciente" element={<FormularioPacientes />} />
 
             {/* Especialistas */}
-            <Route path="/formulario-especialistas" element={<FormularioEspecialistas />} />
+            <Route path="/especialistas-nuevo" element={<FormularioEspecialistas />} />
             {/* Tables */}
             {/* <Route path="/basic-tables" element={<BasicTables />} /> */}
 

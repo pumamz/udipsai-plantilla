@@ -34,7 +34,7 @@ export default function FormularioPacientes() {
     { value: "otros", label: "Otros" },
   ];
 
-    
+
 
   const optionsInstituciones = [
     { value: "institucion1", label: "Institución Educativa 1" },
