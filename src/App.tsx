@@ -8,6 +8,7 @@ import Home from "./pages/Dashboard/Home";
 import FormularioEspecialistas from "./pages/Especialistas/FormularioEspecialistas";
 import ListaPacientes from "./pages/Pacientes/ListaPacientes";
 import ListaInstituciones from "./pages/Instituciones/Instituciones";
+import ListaSedes from "./pages/Sedes/Sedes";
 export default function App() {
   return (
     <>
@@ -34,6 +35,7 @@ export default function App() {
             {/* Tables */}
             {/* <Route path="/basic-tables" element={<BasicTables />} /> */}
             <Route path="/instituciones" element={<ListaInstituciones />} />
+            <Route path="/sedes" element={<ListaSedes />} />
             {/* Ui Elements */}
             {/* <Route path="/alerts" element={<Alerts />} />
             <Route path="/avatars" element={<Avatars />} />

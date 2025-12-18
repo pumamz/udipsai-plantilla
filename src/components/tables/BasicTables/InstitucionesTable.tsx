@@ -18,7 +18,7 @@ interface Institucion {
     institucionEstado: number;
 }
 
-export default function Instituciones() {
+export default function InstitucionesTable() {
     const [instituciones, setInstituciones] = useState<Institucion[]>([]);
       const [loading, setLoading] = useState(true);
     
