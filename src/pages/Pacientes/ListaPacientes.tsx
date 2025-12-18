@@ -1,6 +1,6 @@
 import PageBreadcrumb from "../../components/common/PageBreadCrumb";
 import PageMeta from "../../components/common/PageMeta";
-import PacientesTable from "../../components/tables/BasicTables/PacientesTable";
+import PacientesAccionesTable from "../../components/tables/AccionTables/PacientesAccionesTable";
 
 export default function ListaPacientes() {
   return (
@@ -11,7 +11,7 @@ export default function ListaPacientes() {
       />
       <PageBreadcrumb pageTitle="Lista de pacientes" />
       <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
-        <PacientesTable />
+        <PacientesAccionesTable />
       
     </div>
     </div>

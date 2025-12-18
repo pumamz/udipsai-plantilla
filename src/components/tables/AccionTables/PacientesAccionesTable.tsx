@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import {
     Table,
     TableBody,
@@ -7,9 +8,14 @@ import {
     TableRow,
 } from "../../ui/table";
 
+import { PencilIcon, TrashBinIcon, CopyIcon } from "../../../icons";
+
 import Badge from "../../ui/badge/Badge";
 import { pacientesService } from "../../../services/pacientes";
 import Button from "../../ui/button/Button";
+import { useModal } from "../../../hooks/useModal";
+import { DeleteModal } from "../../ui/modal/DeleteModal";
+import { PatientDetailsModal } from "./PacienteDetalleModal";
 
 interface Paciente {
     id: number;
@@ -21,26 +27,77 @@ interface Paciente {
         nombre: string;
     };
     pacienteEstado: number;
+    fechaNacimiento?: string;
+    edad?: string;
+    ciudad?: string;
+    domicilio?: string;
+    institucionEducativa?: {
+        nombreInstitucion: string;
+    };
+    motivoConsulta?: string;
+    observaciones?: string;
 }
 
-export default function PacientesTable() {
+export default function PacientesAccionesTable() {
     const [pacientes, setPacientes] = useState<Paciente[]>([]);
     const [loading, setLoading] = useState(true);
+    const [selectedPaciente, setSelectedPaciente] = useState<Paciente | null>(null);
+    const navigate = useNavigate();
+
+    const {
+        isOpen: isDeleteModalOpen,
+        openModal: openDeleteModal,
+        closeModal: closeDeleteModal,
+    } = useModal();
+
+    const {
+        isOpen: isDetailsModalOpen,
+        openModal: openDetailsModal,
+        closeModal: closeDetailsModal,
+    } = useModal();
+
+    const fetchPacientes = async () => {
+        try {
+            setLoading(true);
+            const data = await pacientesService.listar();
+            setPacientes(data);
+        } catch (error) {
+            console.error("Error al obtener pacientes:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const fetchPacientes = async () => {
-            try {
-                const data = await pacientesService.listar();
-                setPacientes(data);
-            } catch (error) {
-                console.error("Error fetching pacientes:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
         fetchPacientes();
     }, []);
+
+    const handleEdit = (id: number) => {
+        navigate(`/pacientes/editar/${id}`);
+    };
+
+    const handleDeleteClick = (paciente: Paciente) => {
+        setSelectedPaciente(paciente);
+        openDeleteModal();
+    };
+
+    const handleConfirmDelete = async () => {
+        if (selectedPaciente) {
+            try {
+                await pacientesService.eliminar(selectedPaciente.id);
+                await fetchPacientes();
+                closeDeleteModal();
+                setSelectedPaciente(null);
+            } catch (error) {
+                console.error("Error al eliminar paciente:", error);
+            }
+        }
+    };
+
+    const handleDetailsClick = (paciente: Paciente) => {
+        setSelectedPaciente(paciente);
+        openDetailsModal();
+    };
 
     const getEstadoBadge = (estado: number) => {
         return estado === 1 ? 'success' : 'error';
@@ -129,18 +186,55 @@ export default function PacientesTable() {
                                     </Badge>
                                 </TableCell>
                                 <TableCell className="px-5 py-3 text-theme-xs text-gray-700 dark:text-gray-300">
-                                    <Button
-                                        size="sm"
-                                        variant="outline"
-                                    >
-                                        Editar
-                                    </Button>
+                                    <div className="flex items-center gap-2">
+                                        <Button
+                                            size="sm"
+                                            variant="outline"
+                                            onClick={() => handleDetailsClick(paciente)}
+                                            className="p-2"
+                                            title="Detalles"
+                                        >
+                                            <CopyIcon />
+                                        </Button>
+                                        <Button
+                                            size="sm"
+                                            variant="outline"
+                                            onClick={() => handleEdit(paciente.id)}
+                                            className="p-2 "
+                                            title="Editar"
+                                        >
+                                            <PencilIcon />
+                                        </Button>
+                                        <Button
+                                            size="sm"
+                                            variant="outline"
+                                            onClick={() => handleDeleteClick(paciente)}
+                                            className="p-2 text-red-600 hover:text-red-700 dark:text-red-400"
+                                            title="Eliminar"
+                                        >
+                                            <TrashBinIcon />
+                                        </Button>
+                                    </div>
                                 </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </div>
+
+            <DeleteModal
+                isOpen={isDeleteModalOpen}
+                onClose={closeDeleteModal}
+                onConfirm={handleConfirmDelete}
+                title="Eliminar Paciente"
+                description={`¿Estás seguro de que deseas eliminar al paciente ${selectedPaciente?.nombresApellidos}? Esta acción no se puede deshacer.`}
+            />
+
+            <PatientDetailsModal
+                isOpen={isDetailsModalOpen}
+                onClose={closeDetailsModal}
+                paciente={selectedPaciente}
+            />
         </div>
     );
 }

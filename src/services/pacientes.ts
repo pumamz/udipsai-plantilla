@@ -128,4 +128,14 @@ export const pacientesService = {
       throw error;
     }
   },
+
+  eliminar: async (id: number | string) => {
+    try {
+      const response = await api.delete(`api/pacientes/eliminar/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error al eliminar paciente:', error);
+      throw error;
+    }
+  },
 };
