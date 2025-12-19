@@ -4,7 +4,7 @@ import PacientesAccionesTable from "../../components/tables/AccionTables/Pacient
 
 export default function ListaPacientes() {
   return (
-    <div>
+    <>
       <PageMeta
         title="Lista de Pacientes | Udipsai"
         description="Formulario para la gestión de pacientes en Udipsai"
@@ -12,8 +12,8 @@ export default function ListaPacientes() {
       <PageBreadcrumb pageTitle="Lista de pacientes" />
       <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
         <PacientesAccionesTable />
-      
-    </div>
-    </div>
+
+      </div>
+    </>
   );
 }
