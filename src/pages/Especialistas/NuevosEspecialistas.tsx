@@ -9,7 +9,14 @@ export default function NuevosEspecialistas() {
         title="Nuevo Especialista | Udipsai"
         description="Formulario para la gestión de especialistas en Udipsai"
       />
-      <PageBreadcrumb pageTitle="Nuevo Especialista" />
+      <PageBreadcrumb
+        pageTitle="Nuevo Especialista"
+        items={[
+          { label: "Inicio", path: "/" },
+          { label: "Especialistas", path: "/especialistas" },
+          { label: "Nuevo Especialista" },
+        ]}
+      />
       <FormularioEspecialistas />
     </>
   );

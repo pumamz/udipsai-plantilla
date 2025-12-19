@@ -9,7 +9,14 @@ export default function EditarPacientes() {
         title="Editar Paciente | Udipsai"
         description="Formulario para la gestión de pacientes en Udipsai"
       />
-      <PageBreadcrumb pageTitle="Editar Paciente" />
+      <PageBreadcrumb
+        pageTitle="Editar Paciente"
+        items={[
+          { label: "Inicio", path: "/" },
+          { label: "Pacientes", path: "/pacientes" },
+          { label: "Editar Paciente" },
+        ]}
+      />
       <FormularioPacientes />
     </>
   );

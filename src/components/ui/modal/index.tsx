@@ -58,7 +58,7 @@ const contentClasses = isFullscreen
     <div className="fixed inset-0 flex items-center justify-center overflow-y-auto modal z-99999">
       {!isFullscreen && (
         <div
-          className="fixed inset-0 h-full w-full bg-black/20 backdrop-blur-sm"
+          className="fixed inset-0 h-full w-full bg-gray-900/20 backdrop-blur-sm"
           onClick={onClose}
         ></div>
       )}

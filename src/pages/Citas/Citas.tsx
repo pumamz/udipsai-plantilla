@@ -2,7 +2,7 @@ import PageMeta from "../../components/common/PageMeta";
 import PageBreadcrumb from "../../components/common/PageBreadCrumb";
 import ComponentCard from "../../components/common/ComponentCard";
 
-const Citas = () => {
+export default function Citas() {
   return (
     <>
       <PageMeta
@@ -15,6 +15,4 @@ const Citas = () => {
       </ComponentCard>
     </>
   );
-};
-
-export default Citas;
+}

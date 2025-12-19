@@ -6,7 +6,6 @@ import EditarPacientes from "./pages/Pacientes/EditarPacientes";
 import AppLayout from "./layout/AppLayout";
 import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
-import FormularioEspecialistas from "./components/form/especialista-form/FormularioEspecialistas";
 import ListaPacientes from "./pages/Pacientes/ListaPacientes";
 import ListaInstituciones from "./pages/Instituciones/Instituciones";
 import ListaSedes from "./pages/Sedes/Sedes";
@@ -19,6 +18,8 @@ import NotFound from "./pages/OtherPages/NotFound";
 import EditarEspecialistas from "./pages/Especialistas/EditarEspecialitas";
 import ListaEspecialistas from "./pages/Especialistas/ListaEspecialistas";
 import AsignacionesEspecialistas from "./pages/Especialistas/AsignacionesEspecialistas";
+import NuevosEspecialistas from "./pages/Especialistas/NuevosEspecialistas";
+import Wais from "./pages/Wais/Wais";
 
 export default function App() {
   return (
@@ -37,7 +38,7 @@ export default function App() {
             <Route path="citas" element={<Citas />} />
             {/* Especialistas */}
             <Route path="especialistas" element={<ListaEspecialistas />} />
-            <Route path="especialistas/nuevo" element={<FormularioEspecialistas />} />
+            <Route path="especialistas/nuevo" element={<NuevosEspecialistas />} />
             <Route path="especialistas/editar/:id" element={<EditarEspecialistas />} />
             <Route path="asignaciones" element={<AsignacionesEspecialistas />} />
             {/* Instituciones */}
@@ -49,6 +50,8 @@ export default function App() {
             <Route path="psicologia-clinica" element={<FichaPsicologiaClinica />} />
             <Route path="psicologia-educativa" element={<FichaPsicologiaEducativa />} />
             <Route path="historia-clinica" element={<HistoriaClinica />} />
+            {/* Wais */}
+            <Route path="wais" element={<Wais />} />
           </Route>
 
           {/* Auth Layout */}

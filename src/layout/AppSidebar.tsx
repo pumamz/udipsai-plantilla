@@ -8,11 +8,12 @@ import {
   MoreHorizontal,
   PieChart,
   Plug,
-  Table,
   Building2,
   FileText,
   Link2,
   Users,
+  NotepadText,
+  MapPin,
 } from "lucide-react";
 
 import { useSidebar } from "../context/SidebarContext";
@@ -52,6 +53,11 @@ const navItems: NavItem[] = [
     ],
   },
   {
+    name: "Wais-IV",
+    icon: <NotepadText size={20} />,
+    path: "/wais",
+  },
+  {
     name: "Especialistas",
     icon: <Users size={20} />,
     path: "/especialistas",
@@ -68,7 +74,7 @@ const navItems: NavItem[] = [
   },
   {
     name: "Sedes",
-    icon: <Table size={20} />,
+    icon: <MapPin size={20} />,
     path: "/sedes",
   },
 ];
