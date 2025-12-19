@@ -1,20 +1,21 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router";
 
-// Assume these icons are imported from an icon library
 import {
-  BoxCubeIcon,
-  CalenderIcon,
-  ChevronDownIcon,
-  GridIcon,
-  HorizontaLDots,
-  ListIcon,
-  PageIcon,
-  PieChartIcon,
-  PlugInIcon,
-  TableIcon,
-  UserCircleIcon,
-} from "../icons";
+  Calendar,
+  ChevronDown,
+  LayoutGrid,
+  MoreHorizontal,
+  PieChart,
+  Plug,
+  Building2,
+  FileText,
+  Link2,
+  Users,
+  NotepadText,
+  MapPin,
+} from "lucide-react";
+
 import { useSidebar } from "../context/SidebarContext";
 
 type NavItem = {
@@ -26,63 +27,70 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   {
-    icon: <GridIcon />,
-    name: "Dashboard",
-    subItems: [{ name: "Ecommerce", path: "/", pro: false }],
+    icon: <LayoutGrid size={20} />,
+    name: "Home",
+    path: "/",
   },
   {
-    icon: <CalenderIcon />,
-    name: "Calendar",
-    path: "/calendar",
+    icon: <Users size={20} />,
+    name: "Pacientes",
+    path: "/pacientes",
   },
+  { icon: <Calendar size={20} />, name: "Citas", path: "/citas" },
   {
-    icon: <UserCircleIcon />,
-    name: "User Profile",
-    path: "/profile",
-  },
-  {
-    name: "Forms",
-    icon: <ListIcon />,
-    subItems: [{ name: "Form Elements", path: "/form-elements", pro: false }],
-  },
-  {
-    name: "Tables",
-    icon: <TableIcon />,
-    subItems: [{ name: "Basic Tables", path: "/basic-tables", pro: false }],
-  },
-  {
-    name: "Pages",
-    icon: <PageIcon />,
+    icon: <FileText size={20} />,
+    name: "Fichas",
+    path: "/fichas",
     subItems: [
-      { name: "Blank Page", path: "/blank", pro: false },
-      { name: "404 Error", path: "/error-404", pro: false },
+      { name: "Historia Clínica", path: "/historia-clinica", pro: false },
+      {
+        name: "Psicología Educativa",
+        path: "/psicologia-educativa",
+        pro: false,
+      },
+      { name: "Psicología Clínica", path: "/psicologia-clinica", pro: false },
+      { name: "Fonoaudiología", path: "/fonoaudiologia", pro: false },
     ],
+  },
+  {
+    name: "Wais-IV",
+    icon: <NotepadText size={20} />,
+    path: "/wais",
+  },
+  {
+    name: "Especialistas",
+    icon: <Users size={20} />,
+    path: "/especialistas",
+  },
+  {
+    name: "Asignaciones",
+    icon: <Link2 size={20} />,
+    path: "/asignaciones",
+  },
+  {
+    icon: <Building2 size={20} />,
+    name: "Instituciones",
+    path: "/instituciones",
+  },
+  {
+    name: "Sedes",
+    icon: <MapPin size={20} />,
+    path: "/sedes",
   },
 ];
 
 const othersItems: NavItem[] = [
   {
-    icon: <PieChartIcon />,
-    name: "Charts",
+    icon: <PieChart size={20} />,
+    name: "Reportes",
     subItems: [
-      { name: "Line Chart", path: "/line-chart", pro: false },
-      { name: "Bar Chart", path: "/bar-chart", pro: false },
+      { name: "Fichas", path: "/reportes-fichas", pro: false },
+      { name: "Cambios", path: "/reportes-cambios", pro: false },
+      { name: "Citas", path: "/reportes-citas", pro: false },
     ],
   },
   {
-    icon: <BoxCubeIcon />,
-    name: "UI Elements",
-    subItems: [
-      { name: "Alerts", path: "/alerts", pro: false },
-      { name: "Avatar", path: "/avatars", pro: false },
-      { name: "Badge", path: "/badge", pro: false },
-      { name: "Buttons", path: "/buttons", pro: false },
-      { name: "Images", path: "/images", pro: false },
-      { name: "Videos", path: "/videos", pro: false },
-    ],
-  },
-  {
-    icon: <PlugInIcon />,
+    icon: <Plug size={20} />,
     name: "Authentication",
     subItems: [
       { name: "Sign In", path: "/signin", pro: false },
@@ -104,7 +112,6 @@ const AppSidebar: React.FC = () => {
   );
   const subMenuRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
-  // const isActive = (path: string) => location.pathname === path;
   const isActive = useCallback(
     (path: string) => location.pathname === path,
     [location.pathname]
@@ -189,7 +196,7 @@ const AppSidebar: React.FC = () => {
                 <span className="menu-item-text">{nav.name}</span>
               )}
               {(isExpanded || isHovered || isMobileOpen) && (
-                <ChevronDownIcon
+                <ChevronDown
                   className={`ml-auto w-5 h-5 transition-transform duration-200 ${
                     openSubmenu?.type === menuType &&
                     openSubmenu?.index === index
@@ -302,19 +309,19 @@ const AppSidebar: React.FC = () => {
           !isExpanded && !isHovered ? "lg:justify-center" : "justify-start"
         }`}
       >
-        <Link to="/">
+        <Link to="/" className="flex justify-center items-center w-full">
           {isExpanded || isHovered || isMobileOpen ? (
             <>
               <img
                 className="dark:hidden"
-                src="/images/logo/logo.svg"
+                src="/images/logo/logo.png"
                 alt="Logo"
                 width={150}
                 height={40}
               />
               <img
                 className="hidden dark:block"
-                src="/images/logo/logo-dark.svg"
+                src="/images/logo/logo-dark.png"
                 alt="Logo"
                 width={150}
                 height={40}
@@ -322,7 +329,7 @@ const AppSidebar: React.FC = () => {
             </>
           ) : (
             <img
-              src="/images/logo/logo-icon.svg"
+              src="/images/logo/logo-icon.png"
               alt="Logo"
               width={32}
               height={32}
@@ -344,7 +351,7 @@ const AppSidebar: React.FC = () => {
                 {isExpanded || isHovered || isMobileOpen ? (
                   "Menu"
                 ) : (
-                  <HorizontaLDots className="size-6" />
+                  <MoreHorizontal className="size-6" />
                 )}
               </h2>
               {renderMenuItems(navItems, "main")}
@@ -360,7 +367,7 @@ const AppSidebar: React.FC = () => {
                 {isExpanded || isHovered || isMobileOpen ? (
                   "Others"
                 ) : (
-                  <HorizontaLDots />
+                  <MoreHorizontal />
                 )}
               </h2>
               {renderMenuItems(othersItems, "others")}
