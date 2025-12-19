@@ -10,9 +10,7 @@ export default function ListaInstituciones() {
         description="Formulario para la gestión de instituciones en Udipsai"
       />
       <PageBreadcrumb pageTitle="Lista de instituciones" />
-      <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
-        <InstitucionesAccionesTable />
-      </div>
+      <InstitucionesAccionesTable />
     </>
   );
 }

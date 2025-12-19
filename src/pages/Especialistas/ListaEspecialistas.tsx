@@ -1,6 +1,6 @@
-import ComponentCard from "../../components/common/ComponentCard";
 import PageBreadcrumb from "../../components/common/PageBreadCrumb";
 import PageMeta from "../../components/common/PageMeta";
+import EspecialistasAccionesTable from "../../components/tables/AccionTables/EspecialistasAccionesTable";
 
 export default function ListaEspecialistas() {
   return (
@@ -10,9 +10,7 @@ export default function ListaEspecialistas() {
         description="Formulario para la gestión de asignaciones de especialistas en Udipsai"
       />
       <PageBreadcrumb pageTitle="Lista de Especialistas" />
-      <ComponentCard title="Lista de Especialistas">
-        <div></div>
-      </ComponentCard>
+      <EspecialistasAccionesTable />
     </>
   );
 }

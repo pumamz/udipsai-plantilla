@@ -11,12 +11,10 @@ const api = axios.create({
   timeout: 30000,
 });
 
-// Interceptor para manejo de errores
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      // Manejar token expirado
       localStorage.removeItem('user');
       localStorage.removeItem('token');
       window.location.href = '/login';

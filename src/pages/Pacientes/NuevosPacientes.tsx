@@ -1,4 +1,3 @@
-import ComponentCard from "../../components/common/ComponentCard";
 import PageBreadcrumb from "../../components/common/PageBreadCrumb";
 import PageMeta from "../../components/common/PageMeta";
 import FormularioPacientes from "../../components/form/paciente-form/FormularioPacientes";
@@ -11,9 +10,7 @@ export default function NuevosPacientes() {
         description="Formulario para la gestión de pacientes en Udipsai"
       />
       <PageBreadcrumb pageTitle="Nuevo Paciente" />
-      <ComponentCard title="Datos personales del paciente">
-        <FormularioPacientes/>
-      </ComponentCard>
+      <FormularioPacientes/>
     </>
   );
 }

@@ -13,6 +13,6 @@ export default function AsignacionesEspecialistas() {
       <ComponentCard title="Asignaciones de Especialistas">
         <div></div>
       </ComponentCard>
-    </>
+    </> 
   );
 }

@@ -31,19 +31,19 @@ export default function App() {
             <Route index path="/" element={<Home />} />
 
             {/* Pacientes */}
-            <Route path="/pacientes" element={<ListaPacientes />} />
-            <Route path="/pacientes/nuevo" element={<NuevosPacientes />} />
-            <Route path="/pacientes/editar/:id" element={<EditarPacientes />} />
+            <Route path="pacientes" element={<ListaPacientes />} />
+            <Route path="pacientes/nuevo" element={<NuevosPacientes />} />
+            <Route path="pacientes/editar/:id" element={<EditarPacientes />} />
             <Route path="citas" element={<Citas />} />
             {/* Especialistas */}
-            <Route path="/especialistas" element={<ListaEspecialistas />} />
-            <Route path="/especialistas/nuevo" element={<FormularioEspecialistas />} />
-            <Route path="/especialistas/editar/:id" element={<EditarEspecialistas />} />
-            <Route path="/asignaciones" element={<AsignacionesEspecialistas />} />
+            <Route path="especialistas" element={<ListaEspecialistas />} />
+            <Route path="especialistas/nuevo" element={<FormularioEspecialistas />} />
+            <Route path="especialistas/editar/:id" element={<EditarEspecialistas />} />
+            <Route path="asignaciones" element={<AsignacionesEspecialistas />} />
             {/* Instituciones */}
-            <Route path="/instituciones" element={<ListaInstituciones />} />
+            <Route path="instituciones" element={<ListaInstituciones />} />
             {/* Sedes */}
-            <Route path="/sedes" element={<ListaSedes />} />
+            <Route path="sedes" element={<ListaSedes />} />
             {/* Fichas */}
             <Route path="fonoaudiologia" element={<FichaFonoaudiologia />} />
             <Route path="psicologia-clinica" element={<FichaPsicologiaClinica />} />
@@ -52,8 +52,8 @@ export default function App() {
           </Route>
 
           {/* Auth Layout */}
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
+          <Route path="signin" element={<SignIn />} />
+          <Route path="signup" element={<SignUp />} />
 
           {/* Fallback Route */}
           <Route path="*" element={<NotFound />} />

@@ -76,9 +76,8 @@ export default function FormularioPacientes() {
                 }
             };
             fetchPaciente();
-            getInstituciones();
-
         }
+        getInstituciones();
     }, [id, isEditing]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -87,9 +86,7 @@ export default function FormularioPacientes() {
     };
 
     const handleSelectChange = (name: string, value: string | number) => {
-        console.log(name, value);
         setFormData((prev) => ({ ...prev, [name]: value }));
-        console.log(formData);
     };
 
     const handleSwitchChange = (name: string, checked: boolean) => {
@@ -114,7 +111,6 @@ export default function FormularioPacientes() {
     const handleSubmit = async () => {
         try {
             setLoading(true);
-            console.log(formData);
             const payload = {
                 ...formData,
                 institucionEducativa: Number(formData.institucionEducativa) || 0,
@@ -125,7 +121,6 @@ export default function FormularioPacientes() {
                 edad: String(formData.edad),
                 fechaApertura: isEditing ? formData.fechaApertura : new Date().toISOString(),
             };
-            console.log(payload);
             if (isEditing) {
                 await pacientesService.actualizar(id, payload);
             } else {
@@ -156,8 +151,12 @@ export default function FormularioPacientes() {
     ];
 
     const getInstituciones = async () => {
-        const data = await institucionesService.listar();
-        setInstituciones(data);
+        try {
+            const data = await institucionesService.listar();
+            setInstituciones(data);
+        } catch (error) {
+            console.error("Error fetching institutions:", error);
+        }
     }
 
     const [instituciones, setInstituciones] = useState([
