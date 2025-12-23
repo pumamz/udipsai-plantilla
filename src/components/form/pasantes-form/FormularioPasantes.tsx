@@ -4,12 +4,13 @@ import Label from "../Label";
 import Select from "../Select";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
-import { especialistasService } from "../../../services/especialistas";
-import { sedesService } from "../../../services";
+import { pasantesService } from "../../../services/pasantes";
+import { especialistasService } from "../../../services";
 import Button from "../../ui/button/Button";
 import { toast } from "react-toastify";
+import DatePicker from "../date-picker";
 
-export default function FormularioEspecialistas() {
+export default function FormularioPasantes() {
   const { id } = useParams();
   const navigate = useNavigate();
   const isEditing = !!id;
@@ -17,10 +18,11 @@ export default function FormularioEspecialistas() {
   const [formData, setFormData] = useState({
     cedula: "",
     nombresApellidos: "",
-    fotoUrl: "",
     contrasenia: "",
-    especialidadId: 0,
-    sedeId: 0,
+    fotoUrl: "",
+    inicioPasantia: new Date().toISOString(),
+    finPasantia: new Date().toISOString(),
+    tutorId: 0,
     activo: true,
   });
 
@@ -28,29 +30,30 @@ export default function FormularioEspecialistas() {
 
   useEffect(() => {
     if (isEditing) {
-      const fetchEspecialista = async () => {
+      const fetchPasante = async () => {
         try {
           setLoading(true);
-          const data = await especialistasService.obtenerPorId(id);
+          const data = await pasantesService.obtenerPorId(id);
 
           setFormData({
             cedula: data.cedula,
             nombresApellidos: data.nombresApellidos,
-            fotoUrl: data.fotoUrl,
             contrasenia: data.contrasenia,
-            especialidadId: data.especialidad?.id || data.especialidadId || 0,
-            sedeId: data.sede?.id || data.sedeId || 0,
+            fotoUrl: data.fotoUrl,
+            inicioPasantia: data.inicioPasantia ? data.inicioPasantia.split("T")[0] : "",
+            finPasantia: data.finPasantia ? data.finPasantia.split("T")[0] : "",
+            tutorId: data.tutor?.id || 0,
             activo: data.activo,
           });
         } catch (error) {
-          console.error("Error al obtener especialista:", error);
+          console.error("Error al obtener pasante:", error);
         } finally {
           setLoading(false);
         }
       };
-      fetchEspecialista();
+      fetchPasante();
     }
-    getSedes();
+    getEspecialistas();
   }, [id, isEditing]);
 
   const handleChange = (
@@ -61,7 +64,13 @@ export default function FormularioEspecialistas() {
   };
 
   const handleSelectChange = (name: string, value: string | number) => {
+    console.log(name, value);
     setFormData((prev) => ({ ...prev, [name]: value }));
+    console.log(formData);
+  };
+
+  const handleDateChange = (name: string, dates: Date[]) => {
+    setFormData((prev) => ({ ...prev, [name]: dates[0].toISOString() }));
   };
 
   const handleSubmit = async () => {
@@ -71,57 +80,50 @@ export default function FormularioEspecialistas() {
         cedula: formData.cedula,
         nombresApellidos: formData.nombresApellidos,
         contrasenia: formData.contrasenia,
-        especialidadId: Number(formData.especialidadId),
-        sedeId: Number(formData.sedeId),
+        fotoUrl: formData.fotoUrl,
+        inicioPasantia: formData.inicioPasantia,
+        finPasantia: formData.finPasantia,
+        tutorId: Number(formData.tutorId),
         activo: formData.activo,
       };
       if (isEditing) {
-        await especialistasService.actualizar(id, payload);
+        await pasantesService.actualizar(id, payload);
       } else {
-        await especialistasService.crear(payload);
+        await pasantesService.crear(payload);
       }
-      navigate("/especialistas");
+      navigate("/pasantes");
     } catch (error) {
-      toast.error("Error al guardar especialista");
+      toast.error("Error al guardar pasante");
     } finally {
       setLoading(false);
     }
   };
 
-  const getSedes = async () => {
+  const getEspecialistas = async () => {
     try {
-      const data = await sedesService.listar();
-      setSedes(data);
+      const data = await especialistasService.listarActivos();
+      setEspecialistas(data);
     } catch (error) {
-      console.error("Error fetching sedes:", error);
+      console.error("Error fetching especialistas:", error);
     }
   };
 
-  const [sedes, setSedes] = useState([{ id: "0", nombre: "" }]);
+  const [especialistas, setEspecialistas] = useState([
+    { id: "0", nombresApellidos: "" },
+  ]);
 
-  const optionsSede = sedes.map((sede) => ({
-    value: sede.id,
-    label: sede.nombre,
+  const optionsEspecialistas = especialistas.map((especialista) => ({
+    value: especialista.id,
+    label: especialista.nombresApellidos,
   }));
 
-  const optionsEspecialidad = [
-    { value: "1", label: "Coordinación" },
-    { value: "2", label: "Secretaría" },
-    { value: "3", label: "Psicología Educativa" },
-    { value: "4", label: "Psicología Clínica" },
-    { value: "5", label: "Terapia de Lenguaje y Fonoaudiología" },
-    { value: "6", label: "Estimulación Temprana" },
-    { value: "7", label: "Recuperación Pedagógica" },
-    { value: "8", label: "Odontología" },
-  ];
-
   if (loading && isEditing && !formData.cedula) {
-    return <div>Cargando datos del especialista...</div>;
+    return <div>Cargando datos del pasante...</div>;
   }
 
   return (
     <div>
-      <ComponentCard title="Datos personales del especialista">
+      <ComponentCard title="Datos personales del pasante">
         <div className="space-y-6">
           <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
             <div>
@@ -148,29 +150,37 @@ export default function FormularioEspecialistas() {
         </div>
       </ComponentCard>
       <br />
-      <ComponentCard title="Datos de la especialidad">
+      <ComponentCard title="Datos de la pasante">
         <div className="space-y-6">
           <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
             <div>
-              <Label htmlFor="sedeId">Sede</Label>
-              <Select
-                options={optionsSede}
-                placeholder="Seleccione una sede"
-                onChange={(value) => handleSelectChange("sedeId", value)}
-                className="dark:bg-dark-900"
-                defaultValue={String(formData.sedeId || "")}
+              <Label htmlFor="fechaInicio">Fecha de inicio</Label>
+              <DatePicker
+                id="fechaInicio"
+                placeholder="Seleccione la fecha de inicio"
+                onChange={(dates) => handleDateChange("inicioPasantia", dates)}
+                defaultDate={formData.inicioPasantia}
               />
             </div>
             <div>
-              <Label htmlFor="especialidad">Especialidad</Label>
+              <Label htmlFor="fechaFin">Fecha de fin</Label>
+              <DatePicker
+                id="fechaFin"
+                placeholder="Seleccione la fecha de fin"
+                onChange={(dates) => handleDateChange("finPasantia", dates)}
+                defaultDate={formData.finPasantia}
+              />
+            </div>
+            <div>
+              <Label htmlFor="tutor">Tutor</Label>
               <Select
-                options={optionsEspecialidad}
-                placeholder="Seleccione una especialidad"
+                options={optionsEspecialistas}
+                placeholder="Seleccione un tutor"
                 onChange={(value) =>
-                  handleSelectChange("especialidadId", value)
+                  handleSelectChange("tutorId", value)
                 }
                 className="dark:bg-dark-900"
-                defaultValue={String(formData.especialidadId || "")}
+                defaultValue={String(formData.tutorId || "")}
               />
             </div>
           </div>
@@ -194,11 +204,11 @@ export default function FormularioEspecialistas() {
         </div>
       </ComponentCard>
       <div className="mt-6 flex justify-end gap-3">
-        <Button variant="outline" onClick={() => navigate("/especialistas")}>
+        <Button variant="outline" onClick={() => navigate("/pasantes")}>
           Cancelar
         </Button>
         <Button onClick={handleSubmit} disabled={loading}>
-          {loading ? "Guardando..." : "Guardar Especialista"}
+          {loading ? "Guardando..." : "Guardar Pasante"}
         </Button>
       </div>
     </div>

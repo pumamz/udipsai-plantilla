@@ -10,33 +10,31 @@ import {
 import { Pen, Trash } from "lucide-react";
 import Badge from "../../ui/badge/Badge";
 import { toast } from "react-toastify";
-import { especialistasService } from "../../../services/especialistas";
+import { pasantesService } from "../../../services/pasantes";
 import Button from "../../ui/button/Button";
 import { useModal } from "../../../hooks/useModal";
 import { DeleteModal } from "../../ui/modal/DeleteModal";
 import { TableActionHeader } from "../../common/TableActionHeader";
 
-interface Especialista {
+interface Pasante {
   id: number;
   cedula: string;
   nombresApellidos: string;
   fotoUrl: string | null;
-  especialidad: {
+  inicioPasantia: string;
+  finPasantia: string;
+  tutor: {
     id: number;
-    area: string;
-  };
-  sede: {
-    id: number;
-    nombre: string;
+    nombresApellidos: string;
   };
   activo: boolean;
 }
 
-export default function EspecialistasAccionesTable() {
-  const [especialistas, setEspecialistas] = useState<Especialista[]>([]);
+export default function PasantesAccionesTable() {
+  const [pasantes, setPasantes] = useState<Pasante[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedEspecialista, setSelectedEspecialista] =
-    useState<Especialista | null>(null);
+  const [selectedPasante, setSelectedPasante] =
+    useState<Pasante | null>(null);
   const navigate = useNavigate();
 
   const {
@@ -45,42 +43,42 @@ export default function EspecialistasAccionesTable() {
     closeModal: closeDeleteModal,
   } = useModal();
 
-  const fetchEspecialistas = async () => {
+  const fetchPasantes = async () => {
     try {
       setLoading(true);
-      const data = await especialistasService.listarActivos();
-      setEspecialistas(data);
+      const data = await pasantesService.listar();
+      setPasantes(data);
     } catch (error) {
-      console.error("Error fetching especialistas:", error);
+      console.error("Error fetching pasantes:", error);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchEspecialistas();
+    fetchPasantes();
   }, []);
 
   const handleEdit = (id: number) => {
-    navigate(`/especialistas/editar/${id}`);
+    navigate(`/pasantes/editar/${id}`);
   };
 
-  const handleDeleteClick = (especialista: Especialista) => {
-    setSelectedEspecialista(especialista);
+  const handleDeleteClick = (pasante: Pasante) => {
+    setSelectedPasante(pasante);
     openDeleteModal();
   };
 
   const handleConfirmDelete = async () => {
-    if (selectedEspecialista) {
+    if (selectedPasante) {
       try {
-        await especialistasService.eliminar(selectedEspecialista.id);
-        toast.success("Especialista eliminado correctamente");
-        await fetchEspecialistas();
+        await pasantesService.eliminar(selectedPasante.id);
+        toast.success("Pasante eliminado correctamente");
+        await fetchPasantes();
         closeDeleteModal();
-        setSelectedEspecialista(null);
+        setSelectedPasante(null);
       } catch (error) {
-        toast.error("Error al eliminar especialista");
-        console.error("Error al eliminar especialista:", error);
+        toast.error("Error al eliminar pasante");
+        console.error("Error al eliminar pasante:", error);
       }
     }
   };
@@ -105,10 +103,10 @@ export default function EspecialistasAccionesTable() {
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-5 dark:border-white/[0.05] dark:bg-white/[0.03]">
       <TableActionHeader
-        title="Especialistas"
+        title="Pasantes"
         onSearch={handleSearch}
-        onNew={() => navigate("/especialistas/nuevo")}
-        newButtonText="Nuevo Especialista"
+        onNew={() => navigate("/pasantes/nuevo")}
+        newButtonText="Nuevo Pasante"
         onExport={handleExport}
       />
       <div className="max-w-full overflow-x-auto">
@@ -132,13 +130,19 @@ export default function EspecialistasAccionesTable() {
                 isHeader
                 className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
               >
-                Especialidad
+                Inicio Pasantía
               </TableCell>
               <TableCell
                 isHeader
                 className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
               >
-                Sede
+                Fin Pasantía
+              </TableCell>
+              <TableCell
+                isHeader
+                className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+              >
+                Tutor
               </TableCell>
               <TableCell
                 isHeader
@@ -156,26 +160,29 @@ export default function EspecialistasAccionesTable() {
           </TableHeader>
           {/* Table Body */}
           <TableBody>
-            {especialistas.map((especialista) => (
-              <TableRow key={especialista.id}>
+            {pasantes.map((pasante) => (
+              <TableRow key={pasante.id}>
                 <TableCell className="px-5 py-3 text-theme-xs text-gray-700 dark:text-gray-300">
-                  {especialista.cedula}
+                  {pasante.cedula}
                 </TableCell>
                 <TableCell className="px-5 py-3 text-theme-xs text-gray-700 dark:text-gray-300">
-                  {especialista.nombresApellidos}
+                  {pasante.nombresApellidos}
                 </TableCell>
                 <TableCell className="px-5 py-3 text-theme-xs text-gray-700 dark:text-gray-300">
-                  {especialista.especialidad?.area || "N/A"}
+                  {pasante.inicioPasantia || "N/A"}
                 </TableCell>
                 <TableCell className="px-5 py-3 text-theme-xs text-gray-700 dark:text-gray-300">
-                  {especialista.sede?.nombre || "N/A"}
+                  {pasante.finPasantia || "N/A"}
+                </TableCell>
+                <TableCell className="px-5 py-3 text-theme-xs text-gray-700 dark:text-gray-300">
+                  {pasante.tutor?.nombresApellidos || "N/A"}
                 </TableCell>
                 <TableCell className="px-5 py-3 text-theme-xs text-gray-700 dark:text-gray-300">
                   <Badge
                     size="sm"
-                    color={getEstadoBadge(especialista.activo)}
+                    color={getEstadoBadge(pasante.activo)}
                   >
-                    {especialista.activo ? "Activo" : "Inactivo"}
+                    {pasante.activo ? "Activo" : "Inactivo"}
                   </Badge>
                 </TableCell>
                 <TableCell className="px-5 py-3 text-theme-xs text-gray-700 dark:text-gray-300">
@@ -183,7 +190,7 @@ export default function EspecialistasAccionesTable() {
                     <Button
                       size="sm"
                       variant="outline"
-                      onClick={() => handleEdit(especialista.id)}
+                      onClick={() => handleEdit(pasante.id)}
                       className="hover:bg-white hover:text-yellow-600 p-2 text-blue-600 dark:text-blue-400"
                       title="Editar"
                     >
@@ -192,7 +199,7 @@ export default function EspecialistasAccionesTable() {
                     <Button
                       size="sm"
                       variant="outline"
-                      onClick={() => handleDeleteClick(especialista)}
+                      onClick={() => handleDeleteClick(pasante)}
                       className="hover:bg-red-500 hover:text-white p-2 text-red-600 dark:text-red-400"
                       title="Eliminar"
                     >
@@ -210,8 +217,8 @@ export default function EspecialistasAccionesTable() {
         isOpen={isDeleteModalOpen}
         onClose={closeDeleteModal}
         onConfirm={handleConfirmDelete}
-        title="Eliminar Especialista"
-        description={`¿Estás seguro de que deseas eliminar al especialista ${selectedEspecialista?.nombresApellidos}? Esta acción no se puede deshacer.`}
+        title="Eliminar Pasante"
+        description={`¿Estás seguro de que deseas eliminar al pasante ${selectedPasante?.nombresApellidos}? Esta acción no se puede deshacer.`}
       />
     </div>
   );

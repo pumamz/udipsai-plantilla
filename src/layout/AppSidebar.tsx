@@ -63,6 +63,11 @@ const navItems: NavItem[] = [
     path: "/especialistas",
   },
   {
+    name: "Pasantes",
+    icon: <Users size={20} />,
+    path: "/pasantes",
+  },
+  {
     name: "Asignaciones",
     icon: <Link2 size={20} />,
     path: "/asignaciones",

@@ -10,6 +10,7 @@ import { useParams, useNavigate } from "react-router";
 import { pacientesService } from "../../../services/pacientes";
 import Button from "../../ui/button/Button";
 import { institucionesService, sedesService } from "../../../services";
+import { toast } from "react-toastify";
 
 export default function FormularioPacientes() {
   const { id } = useParams();
@@ -125,11 +126,14 @@ export default function FormularioPacientes() {
       };
       if (isEditing) {
         await pacientesService.actualizar(id, payload);
+        toast.success("Paciente actualizado correctamente");
       } else {
         await pacientesService.crear(payload);
+        toast.success("Paciente creado correctamente");
       }
       navigate("/pacientes");
     } catch (error) {
+      toast.error("Error al guardar el paciente");
       console.error("Error saving patient:", error);
     } finally {
       setLoading(false);
