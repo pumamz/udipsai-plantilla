@@ -169,6 +169,7 @@ export default function FormularioHistoriaClinica({
 
   const fetchFicha = async (id: string) => {
     try {
+      if (!id) return;
       setLoading(true);
       const data = await fichasService.obtenerFichaMedica(id);
       if (data) {
@@ -176,7 +177,6 @@ export default function FormularioHistoriaClinica({
         setIsEdit(true);
       }
     } catch (error) {
-      // If it fails, maybe it doesn't exist yet, which is fine
       console.log("No existing ficha found or error fetching:", error);
     } finally {
       setLoading(false);
@@ -200,7 +200,6 @@ export default function FormularioHistoriaClinica({
   const handleSubmit = async () => {
     try {
       setLoading(true);
-
       const payload = {
         pacienteId: Number(pacienteId),
         activo: formData.activo,
@@ -212,7 +211,6 @@ export default function FormularioHistoriaClinica({
         alimentacion: formData.alimentacion,
         antecedentesMedicos: formData.antecedentesMedicos,
       };
-
       await fichasService.crearFichaMedica(payload, genogramaFile || undefined);
       toast.success(
         isEdit ? "Ficha médica actualizada" : "Ficha médica creada exitosamente"

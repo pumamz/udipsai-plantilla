@@ -80,12 +80,10 @@ export const PatientFichasModal: React.FC<PatientFichasModalProps> = ({
   };
 
   const handleAction = (action: string, fileType: string) => {
-    if (fileType === "ficha-medica") {
-      if (action === "Crear" || action === "Editar") {
-        navigate(`/historia-clinica?pacienteId=${paciente.id}`);
-        onClose();
-        return;
-      }
+    if (action === "Crear" || action === "Editar") {
+      navigate(`/${fileType}?pacienteId=${paciente.id}`);
+      onClose();
+      return;
     }
     console.log(`${action} - ${fileType} for patient ${paciente.id}`);
     toast.info(`${action}: Funcionalidad en desarrollo para ${fileType}`);
