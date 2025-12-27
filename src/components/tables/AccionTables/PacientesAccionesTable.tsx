@@ -19,25 +19,64 @@ import { DeleteModal } from "../../ui/modal/DeleteModal";
 import { PatientDetailsModal } from "../../modals/PacienteDetalleModal";
 import { TableActionHeader } from "../../common/TableActionHeader";
 
+[
+  {
+    "id": 1,
+    "fechaApertura": "2025-12-26 18:37:06",
+    "activo": true,
+    "nombresApellidos": "Cesar Daniel",
+    "ciudad": "Cuenca",
+    "fechaNacimiento": "2025-12-26",
+    "edad": 0,
+    "cedula": "0151267226",
+    "domicilio": "Sinincay",
+    "fotoUrl": null,
+    "numeroTelefono": "4132208",
+    "numeroCelular": "0985345378",
+    "institucionEducativa": {
+      "id": 1,
+      "nombre": "Sudamericano"
+    },
+    "sede": {
+      "id": 1,
+      "nombre": "Cuenca"
+    },
+    "proyecto": "Child Fund",
+    "jornada": "VESPERTINA",
+    "nivelEducativo": "basica-elemental",
+    "anioEducacion": "segundo",
+    "anioUniversitario": null,
+    "ciclo": null,
+    "carrera": null,
+    "perteneceInclusion": true,
+    "tieneDiscapacidad": true,
+    "portadorCarnet": true,
+    "perteneceAProyecto": true,
+    "diagnostico": "Ve mucho la tele",
+    "motivoConsulta": "",
+    "observaciones": "",
+    "tipoDiscapacidad": "fisica",
+    "detalleDiscapacidad": "Epilepsia",
+    "porcentajeDiscapacidad": 17,
+    "documentos": []
+  }
+]
+
 interface Paciente {
   id: number;
   nombresApellidos: string;
   cedula: string;
-  telefono: string;
-  celular: string;
-  sede: {
-    nombre: string;
-  };
-  pacienteEstado: number;
-  fechaNacimiento?: string;
-  edad?: string;
-  ciudad?: string;
-  domicilio?: string;
-  institucionEducativa?: {
-    nombreInstitucion: string;
-  };
-  motivoConsulta?: string;
-  observaciones?: string;
+  fechaNacimiento: string;
+  fechaApertura: string;
+  activo: boolean;
+  ciudad: string;
+  domicilio: string;
+  numeroTelefono: string;
+  numeroCelular: string;
+  institucionEducativa: { id: number; nombre: string };
+  sede: { id: number; nombre: string };
+  motivoConsulta: string;
+  observaciones: string;
 }
 
 export default function PacientesAccionesTable() {
@@ -105,8 +144,8 @@ export default function PacientesAccionesTable() {
     openDetailsModal();
   };
 
-  const getEstadoBadge = (estado: number) => {
-    return estado === 1 ? "success" : "error";
+  const getEstadoBadge = (estado: boolean) => {
+    return estado ? "success" : "error";
   };
 
   const handleSearch = (term: string) => {
@@ -196,17 +235,17 @@ export default function PacientesAccionesTable() {
                     {paciente.cedula}
                   </TableCell>
                   <TableCell className="px-5 py-3 text-theme-xs text-gray-700 dark:text-gray-300">
-                    {paciente.telefono}
+                    {paciente.numeroTelefono}
                   </TableCell>
                   <TableCell className="px-5 py-3 text-theme-xs text-gray-700 dark:text-gray-300">
-                    {paciente.sede?.nombre}
+                    {paciente.sede.nombre}
                   </TableCell>
                   <TableCell className="px-5 py-3 text-theme-xs text-gray-700 dark:text-gray-300">
                     <Badge
                       size="sm"
-                      color={getEstadoBadge(paciente.pacienteEstado)}
+                      color={getEstadoBadge(paciente.activo)}
                     >
-                      {paciente.pacienteEstado === 1 ? "Activo" : "Inactivo"}
+                      {paciente.activo ? "Activo" : "Inactivo"}
                     </Badge>
                   </TableCell>
                   <TableCell className="px-5 py-3 text-theme-xs text-gray-700 dark:text-gray-300">

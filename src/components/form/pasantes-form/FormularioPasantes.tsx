@@ -23,7 +23,6 @@ export default function FormularioPasantes() {
     inicioPasantia: new Date().toISOString(),
     finPasantia: new Date().toISOString(),
     tutorId: 0,
-    activo: true,
   });
 
   const [loading, setLoading] = useState(false);
@@ -43,7 +42,6 @@ export default function FormularioPasantes() {
             inicioPasantia: data.inicioPasantia ? data.inicioPasantia.split("T")[0] : "",
             finPasantia: data.finPasantia ? data.finPasantia.split("T")[0] : "",
             tutorId: data.tutor?.id || 0,
-            activo: data.activo,
           });
         } catch (error) {
           console.error("Error al obtener pasante:", error);
@@ -64,9 +62,7 @@ export default function FormularioPasantes() {
   };
 
   const handleSelectChange = (name: string, value: string | number) => {
-    console.log(name, value);
     setFormData((prev) => ({ ...prev, [name]: value }));
-    console.log(formData);
   };
 
   const handleDateChange = (name: string, dates: Date[]) => {
@@ -84,12 +80,13 @@ export default function FormularioPasantes() {
         inicioPasantia: formData.inicioPasantia,
         finPasantia: formData.finPasantia,
         tutorId: Number(formData.tutorId),
-        activo: formData.activo,
       };
       if (isEditing) {
         await pasantesService.actualizar(id, payload);
+        toast.success("Pasante actualizado exitosamente");
       } else {
         await pasantesService.crear(payload);
+        toast.success("Pasante creado exitosamente");
       }
       navigate("/pasantes");
     } catch (error) {
@@ -179,7 +176,6 @@ export default function FormularioPasantes() {
                 onChange={(value) =>
                   handleSelectChange("tutorId", value)
                 }
-                className="dark:bg-dark-900"
                 defaultValue={String(formData.tutorId || "")}
               />
             </div>
