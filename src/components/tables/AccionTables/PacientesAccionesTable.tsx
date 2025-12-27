@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "../../ui/table";
 
-import { Pen, Trash, Info } from "lucide-react";
+import { Pen, Trash, Info, FileText } from "lucide-react";
 
 import Badge from "../../ui/badge/Badge";
 import { toast } from "react-toastify";
@@ -17,50 +17,8 @@ import Button from "../../ui/button/Button";
 import { useModal } from "../../../hooks/useModal";
 import { DeleteModal } from "../../ui/modal/DeleteModal";
 import { PatientDetailsModal } from "../../modals/PacienteDetalleModal";
+import { PatientFichasModal } from "../../modals/PatientFichasModal";
 import { TableActionHeader } from "../../common/TableActionHeader";
-
-[
-  {
-    "id": 1,
-    "fechaApertura": "2025-12-26 18:37:06",
-    "activo": true,
-    "nombresApellidos": "Cesar Daniel",
-    "ciudad": "Cuenca",
-    "fechaNacimiento": "2025-12-26",
-    "edad": 0,
-    "cedula": "0151267226",
-    "domicilio": "Sinincay",
-    "fotoUrl": null,
-    "numeroTelefono": "4132208",
-    "numeroCelular": "0985345378",
-    "institucionEducativa": {
-      "id": 1,
-      "nombre": "Sudamericano"
-    },
-    "sede": {
-      "id": 1,
-      "nombre": "Cuenca"
-    },
-    "proyecto": "Child Fund",
-    "jornada": "VESPERTINA",
-    "nivelEducativo": "basica-elemental",
-    "anioEducacion": "segundo",
-    "anioUniversitario": null,
-    "ciclo": null,
-    "carrera": null,
-    "perteneceInclusion": true,
-    "tieneDiscapacidad": true,
-    "portadorCarnet": true,
-    "perteneceAProyecto": true,
-    "diagnostico": "Ve mucho la tele",
-    "motivoConsulta": "",
-    "observaciones": "",
-    "tipoDiscapacidad": "fisica",
-    "detalleDiscapacidad": "Epilepsia",
-    "porcentajeDiscapacidad": 17,
-    "documentos": []
-  }
-]
 
 interface Paciente {
   id: number;
@@ -97,6 +55,12 @@ export default function PacientesAccionesTable() {
     isOpen: isDetailsModalOpen,
     openModal: openDetailsModal,
     closeModal: closeDetailsModal,
+  } = useModal();
+
+  const {
+    isOpen: isFichasModalOpen,
+    openModal: openFichasModal,
+    closeModal: closeFichasModal,
   } = useModal();
 
   const fetchPacientes = async () => {
@@ -142,6 +106,11 @@ export default function PacientesAccionesTable() {
   const handleDetailsClick = (paciente: Paciente) => {
     setSelectedPaciente(paciente);
     openDetailsModal();
+  };
+
+  const handleFichasClick = (paciente: Paciente) => {
+    setSelectedPaciente(paciente);
+    openFichasModal();
   };
 
   const getEstadoBadge = (estado: boolean) => {
@@ -254,7 +223,7 @@ export default function PacientesAccionesTable() {
                         size="sm"
                         variant="outline"
                         onClick={() => handleDetailsClick(paciente)}
-                        className="hover:bg-white hover:text-blue-600 p-2 text-blue-600 dark:text-blue-400"
+                        className="hover:bg-white hover:text-blue-600 p-2 text-dark dark:text-white-400 dark:hover:text-blue-600"
                         title="Detalles"
                       >
                         <Info size={14} />
@@ -262,8 +231,17 @@ export default function PacientesAccionesTable() {
                       <Button
                         size="sm"
                         variant="outline"
+                        onClick={() => handleFichasClick(paciente)}
+                        className="hover:bg-white hover:text-green-600 p-2 text-dark dark:text-white-400 dark:hover:text-green-600"
+                        title="Fichas"
+                      >
+                        <FileText size={14} />
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
                         onClick={() => handleEdit(paciente.id)}
-                        className="hover:bg-white hover:text-yellow-600 p-2 text-blue-600 dark:text-blue-400"
+                        className="hover:bg-white hover:text-yellow-600 p-2 text-dark dark:text-white-400 dark:hover:text-yellow-600"
                         title="Editar"
                       >
                         <Pen size={14} />
@@ -272,7 +250,7 @@ export default function PacientesAccionesTable() {
                         size="sm"
                         variant="outline"
                         onClick={() => handleDeleteClick(paciente)}
-                        className="hover:bg-red-500 hover:text-white p-2 text-red-600 dark:text-red-400"
+                        className="hover:bg-red-500 hover:text-white p-2 text-red-600 dark:text-red-400 dark:hover:text-red-400"
                         title="Eliminar"
                       >
                         <Trash size={14} />
@@ -303,6 +281,12 @@ export default function PacientesAccionesTable() {
       <PatientDetailsModal
         isOpen={isDetailsModalOpen}
         onClose={closeDetailsModal}
+        paciente={selectedPaciente}
+      />
+
+      <PatientFichasModal
+        isOpen={isFichasModalOpen}
+        onClose={closeFichasModal}
         paciente={selectedPaciente}
       />
     </div>

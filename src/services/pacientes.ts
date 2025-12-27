@@ -91,32 +91,13 @@ export const pacientesService = {
     }
   },
 
-  subirDocumento: async (id: number | string, file: File) => {
+  obtenerResumenFichas: async (id: number | string) => {
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-      
-      const response = await api.post(`/pacientes/${id}/documento`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await api.get(`/pacientes/${id}/resumen-fichas`);
       return response.data;
     } catch (error) {
-      console.error('Error al subir documento:', error);
+      console.error('Error al obtener resumen fichas:', error);
       throw error;
     }
-  },
-
-  obtenerReporteGeneral: async (id: number | string) => {
-      try {
-        const response = await api.get(`/pacientes/${id}/reporte-general`, {
-          responseType: 'blob',
-        });
-        return response.data;
-      } catch (error) {
-        console.error('Error al obtener reporte general:', error);
-        throw error;
-      }
   },
 };
